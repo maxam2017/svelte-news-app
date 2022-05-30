@@ -3,6 +3,36 @@ import type { FullArticle } from 'src/typing/news';
 import { xml2js } from 'xml-js';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const HOST_URL = import.meta.env.VITE_VERCEL_URL;
+
+export const get: RequestHandler = async ({ params }) => {
+	const id = params.id;
+
+	try {
+		const res = await fetch(`${API_BASE_URL}/news/articles/${id}`);
+		const json = await res.json();
+
+		if (res.ok)
+			return {
+				body: toFullArticle(json) as any,
+				headers: {
+					'Cache-Control': 'public,max-age=14400',
+					...(HOST_URL && { 'Access-Control-Allow-Origin': `https://${HOST_URL}}` })
+				}
+			};
+
+		return {
+			status: res.status,
+			body: { code: res.status, message: json.message }
+		};
+	} catch (err) {
+		console.log(err);
+		return {
+			status: 500,
+			body: { code: 500, message: 'internal server error' }
+		};
+	}
+};
 
 function toMediaURL(path: any) {
 	const url = new URL(path);
@@ -38,28 +68,3 @@ function toFullArticle(object: any): FullArticle {
 		paragraphs
 	};
 }
-
-export const get: RequestHandler = async ({ params }) => {
-	const id = params.id;
-
-	try {
-		const res = await fetch(`${API_BASE_URL}/news/articles/${id}`);
-		const json = await res.json();
-		if (res.ok)
-			return {
-				body: toFullArticle(json) as any,
-				headers: { 'cache-control': 'public,max-age=14400' }
-			};
-
-		return {
-			status: res.status,
-			body: { code: res.status, message: json.message }
-		};
-	} catch (err) {
-		console.log(err);
-		return {
-			status: 500,
-			body: { code: 500, message: 'internal server error' }
-		};
-	}
-};

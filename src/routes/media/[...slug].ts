@@ -1,17 +1,16 @@
 import type { RequestHandler } from '@sveltejs/kit';
 
-export const get: RequestHandler = async ({ params, url }) => {
-	const searchParams = url.searchParams;
+const HOST_URL = import.meta.env.VITE_VERCEL_URL;
+
+export const get: RequestHandler = async ({ params }) => {
+	const searchParams = new URLSearchParams();
 	searchParams.set('x-oss-process', 'image/quality,Q_80');
 
 	try {
 		const res = await fetch(
 			`${import.meta.env.VITE_MEDIA_BASE_URL}/${params.slug}?${searchParams}`,
 			{
-				headers: {
-					accept:
-						'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
-				}
+				headers: { accept: 'image/*' }
 			}
 		);
 
@@ -22,7 +21,10 @@ export const get: RequestHandler = async ({ params, url }) => {
 			return {
 				status: 200,
 				body: new Uint8Array(buffer),
-				headers: { 'cache-control': 'public,max-age=7200' }
+				headers: {
+					'Cache-Control': 'public,max-age=86400',
+					...(HOST_URL && { 'Access-Control-Allow-Origin': `https://${HOST_URL}}` })
+				}
 			};
 		}
 		return {
