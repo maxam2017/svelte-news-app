@@ -15,6 +15,11 @@
 	const wpm = 200;
 </script>
 
+<svelte:head>
+	<html lang="en" />
+	<title>Home | EWSN</title>
+</svelte:head>
+
 <div>
 	{#each articles as article (article.id)}
 		{@const minute = Math.round(article.length / wpm)}

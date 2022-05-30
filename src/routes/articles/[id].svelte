@@ -24,6 +24,13 @@
 	}
 </script>
 
+<svelte:head>
+	<html lang="en" />
+	<title>{article.title} | EWSN</title>
+	<meta name="description" content={article.summary} />
+	<meta property="og:image" content={article.thumbnails[0]} />
+</svelte:head>
+
 <h1>{article.title}</h1>
 
 <p>{timeString}．{minute} min read</p>
