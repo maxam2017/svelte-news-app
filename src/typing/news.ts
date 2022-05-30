@@ -2,7 +2,8 @@ export interface Article {
 	id: string;
 	title: string;
 	thumbnail: string;
-	length: string;
+	length: number;
+	publishedAt: string;
 }
 
 type Paragraph =

@@ -30,6 +30,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"date-fns": "^2.28.0",
 		"xml-js": "^1.6.11"
 	}
 }

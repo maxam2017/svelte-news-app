@@ -44,6 +44,7 @@ function toArticle(object: any): Article {
 		id: object.id,
 		title: object.title_en,
 		thumbnail: toMediaURL(object.thumbnail_url),
-		length: object.length
+		length: object.length,
+		publishedAt: object.published_at
 	};
 }
