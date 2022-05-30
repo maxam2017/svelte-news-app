@@ -26,7 +26,6 @@ export const get: RequestHandler = async ({ params }) => {
 			body: { code: res.status, message: json.message }
 		};
 	} catch (err) {
-		console.log(err);
 		return {
 			status: 500,
 			body: { code: 500, message: 'internal server error' }
@@ -35,10 +34,13 @@ export const get: RequestHandler = async ({ params }) => {
 };
 
 function toMediaURL(path: any) {
-	const url = new URL(path);
-	if (!url) return path;
-
-	return `/media${url.pathname}`;
+	try {
+		const url = new URL(path);
+		if (!url) return path;
+		return `/media${url.pathname}`;
+	} catch {
+		return path;
+	}
 }
 
 function toFullArticle(object: any): FullArticle {
@@ -62,9 +64,14 @@ function toFullArticle(object: any): FullArticle {
 	return {
 		id: object.id,
 		title: object.title_en,
+		publishedAt: object.published_at,
 		thumbnails: (object.thumbnail_urls || []).map(toMediaURL),
 		length: object.length,
 		summary: object.summary,
-		paragraphs
+		paragraphs,
+		author: {
+			name: object.source.name_en,
+			avatar: toMediaURL(object.source.logo_url)
+		}
 	};
 }
