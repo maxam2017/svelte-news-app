@@ -42,28 +42,28 @@
 
 <style>
 	h1 {
-		font-size: 1.6rem;
-		font-weight: 900;
 		margin: 24px 8px 12px;
-		line-height: 1.3;
 		color: rgba(0, 0, 0, 0.75);
+		font-size: 1.6rem;
+		font-weight: 700;
+		line-height: 1.3;
 	}
 
 	p {
+		margin: 0 8px;
 		color: rgba(0, 0, 0, 0.55);
 		font-size: 0.9rem;
-		margin: 0 8px;
 		font-weight: 600;
 	}
 
 	summary {
 		padding: 0px 12px 6px;
 		margin: 24px 12px;
+		border-left: 4px solid rgba(0, 75, 100, 0.24);
+		color: rgba(0, 0, 0, 0.55);
+		font-family: 'Source Serif Pro';
 		font-size: 1rem;
 		line-height: 1.5;
-		border-left: 4px solid rgba(0, 75, 100, 0.24);
-		color: rgba(0, 0, 0, 0.45);
-		font-family: 'Source Serif Pro';
 	}
 
 	img {
@@ -76,9 +76,9 @@
 	article > p {
 		margin: 24px 16px;
 		color: rgba(0, 0, 0, 0.75);
-		font-size: 1.1rem;
-		line-height: 1.6;
-		font-weight: 400;
 		font-family: 'Source Serif Pro';
+		font-size: 1.1rem;
+		font-weight: 400;
+		line-height: 1.6;
 	}
 </style>

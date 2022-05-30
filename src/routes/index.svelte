@@ -60,7 +60,7 @@
 		grid-area: title;
 		margin: 0;
 		padding-top: 8px;
-		font-size: 1.2rem;
+		font-size: 1.1rem;
 		line-height: 1.3;
 		color: rgba(0, 0, 0, 0.75);
 	}
@@ -69,7 +69,7 @@
 		grid-area: meta;
 		margin: 0;
 		padding-bottom: 4px;
-		font-size: 0.9rem;
+		font-size: 0.8rem;
 		font-weight: 600;
 		color: rgba(0, 0, 0, 0.45);
 	}
