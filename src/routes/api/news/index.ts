@@ -3,11 +3,18 @@ import type { Article } from 'src/typing/news';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
+function toMediaURL(path: any) {
+	const url = new URL(path);
+	if (!url) return path;
+
+	return `/media${url.pathname}`;
+}
+
 function toArticle(object: any): Article {
 	return {
 		id: object.id,
 		title: object.title_en,
-		thumbnail: object.thumbnail_url,
+		thumbnail: toMediaURL(object.thumbnail_url),
 		length: object.length
 	};
 }
@@ -22,7 +29,8 @@ export const get: RequestHandler = async ({ url }) => {
 		const json = await res.json();
 		if (res.ok)
 			return {
-				body: json.objects.map(toArticle)
+				body: json.objects.map(toArticle),
+				headers: { 'cache-control': 'public,max-age=14400' }
 			};
 		return {
 			status: res.status,
