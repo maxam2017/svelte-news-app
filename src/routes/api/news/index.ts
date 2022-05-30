@@ -17,7 +17,7 @@ export const get: RequestHandler = async () => {
 				body: json.objects.map(toArticle),
 				headers: {
 					'Cache-Control': 'public,max-age=14400',
-					...(HOST_URL && { 'Access-Control-Allow-Origin': `https://${HOST_URL}}` })
+					...(HOST_URL && { 'Access-Control-Allow-Origin': `https://${HOST_URL}` })
 				}
 			};
 		return {

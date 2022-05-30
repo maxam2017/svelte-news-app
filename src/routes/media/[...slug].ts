@@ -23,7 +23,7 @@ export const get: RequestHandler = async ({ params }) => {
 				body: new Uint8Array(buffer),
 				headers: {
 					'Cache-Control': 'public,max-age=86400',
-					...(HOST_URL && { 'Access-Control-Allow-Origin': `https://${HOST_URL}}` })
+					...(HOST_URL && { 'Access-Control-Allow-Origin': `https://${HOST_URL}` })
 				}
 			};
 		}
