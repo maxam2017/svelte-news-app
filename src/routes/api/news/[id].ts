@@ -19,7 +19,7 @@ function toFullArticle(object: any): FullArticle {
 			if (paragraph.img) return { type: 'image', value: toMediaURL(paragraph.img.url._text) };
 			if (paragraph.sent)
 				return {
-					text: 'text',
+					type: 'text',
 					value: Array.isArray(paragraph.sent)
 						? paragraph.sent.map((value: any) => value['_cdata']).join(' ')
 						: paragraph.sent['_cdata']
