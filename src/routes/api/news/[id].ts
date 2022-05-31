@@ -16,7 +16,7 @@ export const get: RequestHandler = async ({ params }) => {
 			return {
 				body: toFullArticle(json) as any,
 				headers: {
-					'Cache-Control': 'public,max-age=14400',
+					'Cache-Control': 'max-age=14400, public',
 					...(HOST_URL && { 'Access-Control-Allow-Origin': `https://${HOST_URL}` })
 				}
 			};
