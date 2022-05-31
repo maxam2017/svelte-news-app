@@ -2,9 +2,18 @@ import type { RequestHandler } from '@sveltejs/kit';
 
 const HOST_URL = import.meta.env.VITE_VERCEL_URL;
 
-export const get: RequestHandler = async ({ params }) => {
+function isTrue(value: any) {
+	return typeof value === 'string' ? value === 'true' : Boolean(value);
+}
+
+export const get: RequestHandler = async ({ params, url }) => {
 	const searchParams = new URLSearchParams();
-	searchParams.set('x-oss-process', 'image/quality,Q_80');
+
+	if (isTrue(url.searchParams.get('blur'))) {
+		searchParams.set('x-oss-process', 'image/blur,r_25,s_12');
+	} else {
+		searchParams.set('x-oss-process', 'image/quality,Q_80');
+	}
 
 	try {
 		const res = await fetch(
