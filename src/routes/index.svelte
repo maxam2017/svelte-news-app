@@ -10,9 +10,10 @@
 	import type { Article } from 'src/typing/news';
 	import type { Load } from '@sveltejs/kit';
 	import { formatDistanceToNow } from 'date-fns';
+	import readTime from '$lib/utils/read-time';
+	import safeCreateDate from '$lib/utils/safe-create-date';
 
 	export let articles: Article[] = [];
-	const wpm = 200;
 </script>
 
 <svelte:head>
@@ -22,8 +23,10 @@
 
 <div>
 	{#each articles as article (article.id)}
-		{@const minute = Math.round(article.length / wpm)}
-		{@const timeString = formatDistanceToNow(new Date(article.publishedAt), { addSuffix: true })}
+		{@const minute = readTime(article.length)}
+		{@const timeString = formatDistanceToNow(safeCreateDate(article.publishedAt), {
+			addSuffix: true
+		})}
 		<a href={`/articles/${article.id}`}>
 			<img width="80" alt={article.title} src={article.thumbnail} />
 			<h2>{article.title}</h2>

@@ -10,16 +10,17 @@
 	import type { FullArticle } from 'src/typing/news';
 	import type { Load } from '@sveltejs/kit';
 	import { formatDistanceToNow } from 'date-fns';
+	import readTime from '$lib/utils/read-time';
+	import safeCreateDate from '$lib/utils/safe-create-date';
 
 	export let article: FullArticle;
 
-	const wpm = 200;
 	let minute: number;
 	let timeString: string;
 	$: {
 		if (article) {
-			minute = Math.round(article.length / wpm);
-			timeString = formatDistanceToNow(new Date(article.publishedAt), { addSuffix: true });
+			minute = readTime(article.length);
+			timeString = formatDistanceToNow(safeCreateDate(article.publishedAt), { addSuffix: true });
 		}
 	}
 </script>

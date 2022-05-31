@@ -1,3 +1,4 @@
+import safeCreateURL from '$lib/utils/safe-create-url';
 import type { RequestHandler } from '@sveltejs/kit';
 import type { FullArticle } from 'src/typing/news';
 import { xml2js } from 'xml-js';
@@ -34,13 +35,9 @@ export const get: RequestHandler = async ({ params }) => {
 };
 
 function toMediaURL(path: any) {
-	try {
-		const url = new URL(path);
-		if (!url) return path;
-		return `/media${url.pathname}`;
-	} catch {
-		return path;
-	}
+	const url = safeCreateURL(path);
+	if (!url) return path;
+	return `/media${url.pathname}`;
 }
 
 function toFullArticle(object: any): FullArticle {

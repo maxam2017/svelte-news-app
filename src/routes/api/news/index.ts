@@ -1,3 +1,4 @@
+import safeCreateURL from '$lib/utils/safe-create-url';
 import type { RequestHandler } from '@sveltejs/kit';
 import type { Article } from 'src/typing/news';
 
@@ -33,7 +34,7 @@ export const get: RequestHandler = async () => {
 };
 
 function toMediaURL(path: any) {
-	const url = new URL(path);
+	const url = safeCreateURL(path);
 	if (!url) return path;
 
 	return `/media${url.pathname}`;
