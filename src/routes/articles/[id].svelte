@@ -2,7 +2,11 @@
 	export const load: Load = async ({ fetch, params }) => {
 		const res = await fetch(`/api/news/${params.id}`);
 		const json = await res.json();
-		return { status: 200, props: { article: json } };
+		return {
+			status: 200,
+			props: { article: json },
+			cache: { maxage: 3600, public: true }
+		};
 	};
 </script>
 
@@ -12,6 +16,7 @@
 	import { formatDistanceToNow } from 'date-fns';
 	import readTime from '$lib/utils/read-time';
 	import safeCreateDate from '$lib/utils/safe-create-date';
+	import Image from '$lib/components/image.svelte';
 
 	export let article: FullArticle;
 
@@ -40,7 +45,7 @@
 <article>
 	{#each article.paragraphs as paragraph}
 		{#if paragraph.type === 'image'}
-			<img alt="" width="80" src={paragraph.value} />
+			<Image class="img" alt="" src={paragraph.value} />
 		{/if}
 		{#if paragraph.type === 'text'}
 			<p>{paragraph.value}</p>
@@ -74,7 +79,7 @@
 		line-height: 1.5;
 	}
 
-	img {
+	article :global(.img) {
 		grid-area: thumbnail;
 		align-self: center;
 		width: 100%;

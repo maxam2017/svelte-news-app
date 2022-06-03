@@ -2,7 +2,11 @@
 	export const load: Load = async ({ fetch }) => {
 		const res = await fetch('/api/news');
 		const json = (await res.json()) || [];
-		return { status: 200, props: { articles: json } };
+		return {
+			status: 200,
+			props: { articles: json },
+			cache: { maxage: 3600, public: true }
+		};
 	};
 </script>
 
@@ -12,6 +16,7 @@
 	import { formatDistanceToNow } from 'date-fns';
 	import readTime from '$lib/utils/read-time';
 	import safeCreateDate from '$lib/utils/safe-create-date';
+	import Image from '$lib/components/image.svelte';
 
 	export let articles: Article[] = [];
 </script>
@@ -28,7 +33,7 @@
 			addSuffix: true
 		})}
 		<a href={`/articles/${article.id}`}>
-			<img width="80" alt={article.title} src={article.thumbnail} />
+			<Image width={80} height={80} class="img" alt={article.title} src={article.thumbnail} />
 			<h2>{article.title}</h2>
 			<p>
 				{timeString}．{minute} min read
@@ -55,7 +60,7 @@
 		color: inherit;
 	}
 
-	img {
+	div :global(.img) {
 		grid-area: thumbnail;
 		align-self: center;
 		width: var(--image-size);
@@ -79,6 +84,6 @@
 		padding-bottom: 4px;
 		font-size: 0.8rem;
 		font-weight: 600;
-		color: rgba(0, 0, 0, 0.45);
+		color: rgba(0, 0, 0, 0.55);
 	}
 </style>
